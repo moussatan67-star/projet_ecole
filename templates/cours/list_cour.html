@@ -1,0 +1,37 @@
+{% extends "main.html" %}
+{% block title %}Planning des cours{% endblock %}
+{% block breadcrumb %}Cours / Planning{% endblock %}
+{% block content %}
+<section class="page-heading">
+    <div>
+        <p class="eyebrow">Organisation p&eacute;dagogique</p>
+        <h1>Planning des cours</h1>
+        <p class="page-description">Consultez les horaires, les salles et les enseignements de la semaine.</p>
+    </div>
+</section>
+<section class="panel">
+    <div class="panel-heading">
+        <div>
+            <h2 class="panel-title">Emploi du temps hebdomadaire</h2>
+            <p class="panel-subtitle">Exemple de planning</p>
+        </div>
+        <span class="badge badge-neutral">5 cours</span>
+    </div>
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr><th>Mati&egrave;re</th><th>Professeur</th><th>Jour</th><th>Horaire</th><th>Salle</th><th>Format</th></tr>
+            </thead>
+            <tbody>
+                <tr><td class="person-name">Math&eacute;matiques</td><td>M. Konare</td><td>Lundi</td><td>08:00 - 10:00</td><td>Salle 101</td><td><span class="badge">CM</span></td></tr>
+                <tr><td class="person-name">Physique-Chimie</td><td>Mme Diop</td><td>Lundi</td><td>10:15 - 12:15</td><td>Laboratoire 3</td><td><span class="badge badge-neutral">TD</span></td></tr>
+                <tr><td class="person-name">Informatique</td><td>M. Ndiaye</td><td>Mardi</td><td>14:00 - 16:00</td><td>Salle Info 2</td><td><span class="badge badge-neutral">TD</span></td></tr>
+                <tr><td class="person-name">Histoire-G&eacute;ographie</td><td>Mme Mariama</td><td>Mercredi</td><td>09:00 - 11:00</td><td>Salle 204</td><td><span class="badge">CM</span></td></tr>
+                <tr><td class="person-name">Anglais</td><td>M. Sangare</td><td>Jeudi</td><td>11:00 - 13:00</td><td>Salle 102</td><td><span class="badge badge-neutral">TD</span></td></tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+<p class="data-note">Ce planning est un exemple statique ; les cours ne sont pas encore relies aux donnees de l'application.</p>
+<style>.data-note { margin: 14px 2px 0; color: #8795a5; font-size: 11px; }</style>
+{% endblock %}

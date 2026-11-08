@@ -1,0 +1,60 @@
+{% extends "main.html" %}
+{% block title %}Recu de paiement{% endblock %}
+{% block breadcrumb %}Finances / Re&ccedil;u{% endblock %}
+{% block content %}
+<section class="page-heading no-print">
+    <div>
+        <p class="eyebrow">Gestion financi&egrave;re</p>
+        <h1>Re&ccedil;u de paiement</h1>
+        <p class="page-description">R&eacute;f&eacute;rence de transaction #{{ paiement.pk }}</p>
+    </div>
+    <button class="action-button" type="button" onclick="window.print()">Imprimer le re&ccedil;u</button>
+</section>
+<section class="panel receipt">
+    <header class="receipt-header">
+        <span class="brand-mark">IA</span>
+        <div><strong>ISEP-AT</strong><span>Justificatif de paiement</span></div>
+        {% if paiement.statut == "paye" %}<span class="badge">Pay&eacute;</span>{% else %}<span class="badge badge-neutral">En attente</span>{% endif %}
+    </header>
+    <div class="receipt-number">RE&Ccedil;U N&deg; {{ paiement.pk }}</div>
+    <div class="receipt-grid">
+        <div><span>Etudiant</span><strong>{{ paiement.eleve_nom }}</strong></div>
+        <div><span>Date d'enregistrement</span><strong>{{ paiement.heure|date:"d/m/Y a H:i" }}</strong></div>
+        <div><span>Mode de paiement</span><strong>{{ paiement.get_mode_paiement_display }}</strong></div>
+        <div><span>Statut</span><strong>{{ paiement.get_statut_display }}</strong></div>
+    </div>
+    <div class="receipt-total"><span>Montant</span><strong>{{ paiement.prix|floatformat:0 }} FCFA</strong></div>
+    <p class="receipt-footnote">Ce re&ccedil;u confirme l'enregistrement de la transaction dans le portail scolaire.</p>
+</section>
+<div class="receipt-actions no-print">
+    <a class="cancel-button" href="{% url 'paiement:list_paiement' %}">&larr; Retour aux paiements</a>
+    <a class="row-link" href="{% url 'paiement:ajouter_paiement' %}">Ajouter un autre paiement</a>
+</div>
+<style>
+    .action-button { min-height: 40px; padding: 9px 15px; border: 0; border-radius: 9px; background: var(--brand); color: #fff; font: inherit; font-size: 12px; font-weight: 650; cursor: pointer; }
+    .receipt { max-width: 720px; margin: 0 auto; padding: 30px; }
+    .receipt-header { display: flex; align-items: center; gap: 12px; padding-bottom: 22px; border-bottom: 1px solid var(--line); }
+    .receipt-header > div { display: grid; gap: 2px; margin-right: auto; }
+    .receipt-header > div strong { font-size: 15px; }
+    .receipt-header > div span { color: var(--muted); font-size: 11px; }
+    .receipt-number { margin: 24px 0 16px; color: var(--brand); font-size: 11px; font-weight: 750; letter-spacing: .12em; }
+    .receipt-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .receipt-grid > div { display: grid; gap: 4px; padding: 12px; border-radius: 9px; background: #f8fafc; }
+    .receipt-grid span, .receipt-total span { color: var(--muted); font-size: 11px; }
+    .receipt-grid strong { font-size: 13px; }
+    .receipt-total { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 22px; padding: 16px; border: 1px solid #d5ebe2; border-radius: 10px; background: #f1faf6; }
+    .receipt-total strong { color: var(--brand-dark); font-size: 20px; }
+    .receipt-footnote { margin: 20px 0 0; color: var(--muted); font-size: 11px; text-align: center; }
+    .receipt-actions { display: flex; max-width: 720px; align-items: center; justify-content: space-between; gap: 14px; margin: 16px auto 0; }
+    .cancel-button { color: var(--muted); font-size: 12px; }
+    .row-link { color: var(--brand); font-size: 12px; font-weight: 650; }
+    @media print {
+        body { min-width: 0; background: #fff; }
+        .sidebar, .topbar, .site-footer, .no-print { display: none !important; }
+        .main-area { margin: 0; }
+        .content { width: 100%; padding: 0; }
+        .receipt { max-width: none; border: 0; box-shadow: none; }
+    }
+    @media (max-width: 520px) { .receipt { padding: 18px; } .receipt-grid { grid-template-columns: 1fr; } }
+</style>
+{% endblock %}

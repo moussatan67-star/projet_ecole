@@ -1,0 +1,46 @@
+{% extends "main.html" %}
+{% block title %}Professeurs{% endblock %}
+{% block breadcrumb %}Equipe / Professeurs{% endblock %}
+{% block content %}
+<section class="page-heading">
+    <div>
+        <p class="eyebrow">&Eacute;quipe p&eacute;dagogique</p>
+        <h1>Professeurs</h1>
+        <p class="page-description">Retrouvez les membres de l'&eacute;quipe enseignante.</p>
+    </div>
+</section>
+<section class="panel">
+    <div class="panel-heading">
+        <div>
+            <h2 class="panel-title">Corps enseignant</h2>
+            <p class="panel-subtitle">Annuaire de l'equipe</p>
+        </div>
+        <span class="badge badge-neutral">{{ liste_professeurs|length }} membres</span>
+    </div>
+    <div class="table-wrap">
+        <table>
+            <thead><tr><th>Professeur</th><th>Identifiant</th><th>Fonction</th></tr></thead>
+            <tbody>
+                {% for prof in liste_professeurs %}
+                <tr>
+                    <td>
+                        <div class="person">
+                            <span class="person-avatar">{{ prof.first_name|first|upper }}{{ prof.last_name|first|upper }}</span>
+                            <span class="person-name">{{ prof.first_name }} {{ prof.last_name }}</span>
+                        </div>
+                    </td>
+                    <td class="muted">#{{ prof.id }}</td>
+                    <td><span class="badge">Enseignant</span></td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="3">
+                    <div class="empty-state"><span class="empty-icon">PR</span><h3>Aucun professeur enregistr&eacute;</h3><p>Les membres de l'&eacute;quipe appara&icirc;tront ici une fois ajout&eacute;s.</p></div>
+                </td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+<p class="data-note">L'annuaire utilise les donn&eacute;es de d&eacute;monstration disponibles dans le projet.</p>
+<style>.data-note { margin: 14px 2px 0; color: #8795a5; font-size: 11px; }</style>
+{% endblock %}

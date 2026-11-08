@@ -1,0 +1,53 @@
+{% extends "main.html" %}
+{% block title %}Nouveau paiement{% endblock %}
+{% block breadcrumb %}Finances / Nouveau paiement{% endblock %}
+{% block content %}
+<section class="page-heading">
+    <div>
+        <p class="eyebrow">Gestion financi&egrave;re</p>
+        <h1>Enregistrer un paiement</h1>
+        <p class="page-description">Renseignez les informations de la transaction.</p>
+    </div>
+</section>
+<section class="panel form-panel">
+    <div class="panel-heading">
+        <div><h2 class="panel-title">Informations du paiement</h2><p class="panel-subtitle">Les champs marqu&eacute;s sont obligatoires.</p></div>
+    </div>
+    <form method="post" class="payment-form" novalidate>
+        {% csrf_token %}
+        {% if form.non_field_errors %}<div class="form-errors" role="alert">{{ form.non_field_errors }}</div>{% endif %}
+        {% for field in form %}
+        <div class="form-field{% if field.errors %} has-error{% endif %}">
+            <label for="{{ field.id_for_label }}">{{ field.label }} <span aria-hidden="true">*</span></label>
+            {{ field }}
+            {% if field.help_text %}<small class="field-help">{{ field.help_text }}</small>{% endif %}
+            {% for error in field.errors %}<small class="field-error">{{ error }}</small>{% endfor %}
+        </div>
+        {% endfor %}
+        <div class="form-actions">
+            <a class="cancel-button" href="{% url 'paiement:list_paiement' %}">Annuler</a>
+            <button class="action-button" type="submit">Enregistrer le paiement</button>
+        </div>
+    </form>
+</section>
+<style>
+    .form-panel { max-width: 690px; }
+    .payment-form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; padding: 24px; }
+    .form-field { display: grid; align-content: start; gap: 7px; }
+    .form-field:first-child { grid-column: 1 / -1; }
+    .form-field label { color: #43566b; font-size: 12px; font-weight: 650; }
+    .form-field label span { color: #c2413b; }
+    .form-control { width: 100%; min-height: 42px; padding: 10px 12px; border: 1px solid #dce4eb; border-radius: 8px; background: #fff; color: var(--ink); font: inherit; font-size: 13px; }
+    .form-control:focus { border-color: #58a98d; outline: 3px solid rgba(20,108,90,.12); }
+    .has-error .form-control { border-color: #c2413b; }
+    .field-error, .form-errors { color: #a52e2a; font-size: 11px; }
+    .form-errors { grid-column: 1 / -1; padding: 10px 12px; border-radius: 8px; background: #fff2f0; }
+    .field-help { color: var(--muted); font-size: 11px; }
+    .form-actions { display: flex; grid-column: 1 / -1; justify-content: flex-end; gap: 10px; padding-top: 5px; }
+    .cancel-button { display: inline-flex; min-height: 40px; align-items: center; padding: 9px 14px; border: 1px solid var(--line); border-radius: 9px; color: #526579; font-size: 12px; font-weight: 600; }
+    .cancel-button:hover { background: #f8fafc; }
+    .action-button { min-height: 40px; padding: 9px 15px; border: 0; border-radius: 9px; background: var(--brand); color: #fff; font: inherit; font-size: 12px; font-weight: 650; cursor: pointer; }
+    .action-button:hover { background: var(--brand-dark); }
+    @media (max-width: 520px) { .payment-form { grid-template-columns: 1fr; padding: 17px; } .form-field:first-child { grid-column: auto; } .form-actions { grid-column: auto; } }
+</style>
+{% endblock %}

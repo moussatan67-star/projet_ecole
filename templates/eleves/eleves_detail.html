@@ -1,0 +1,35 @@
+{% extends "main.html" %}
+{% block title %}Fiche etudiant{% endblock %}
+{% block breadcrumb %}Etudiants / Fiche{% endblock %}
+{% block content %}
+<section class="page-heading">
+    <div>
+        <p class="eyebrow">Dossier scolaire</p>
+        <h1>{{ eleves.first_name }} {{ eleves.last_name }}</h1>
+        <p class="page-description">Fiche de l'&eacute;tudiant et informations d'inscription.</p>
+    </div>
+    <a class="back-link" href="{% url 'eleves:home' %}">&larr; Retour aux etudiants</a>
+</section>
+<section class="panel detail-panel">
+    <div class="detail-profile">
+        <span class="profile-avatar">{{ eleves.first_name|first|upper }}{{ eleves.last_name|first|upper }}</span>
+        <div><p class="eyebrow">Etudiant #{{ eleves.id }}</p><h2>{{ eleves.first_name }} {{ eleves.last_name }}</h2></div>
+    </div>
+    <div class="detail-grid">
+        <div class="detail-field"><span>Classe</span><strong>{{ eleves.classe }}</strong></div>
+        <div class="detail-field"><span>Statut</span><strong>{% if eleves.active %}Actif{% else %}Inactif{% endif %}</strong></div>
+    </div>
+</section>
+<style>
+    .back-link { color: var(--brand); font-size: 12px; font-weight: 650; }
+    .detail-panel { padding: 25px; }
+    .detail-profile { display: flex; align-items: center; gap: 15px; padding-bottom: 23px; border-bottom: 1px solid var(--line); }
+    .profile-avatar { display: grid; width: 52px; height: 52px; place-items: center; border-radius: 15px; background: var(--brand-soft); color: var(--brand-dark); font-size: 14px; font-weight: 750; }
+    .detail-profile .eyebrow { margin-bottom: 4px; }
+    .detail-profile h2 { margin: 0; font-size: 18px; }
+    .detail-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 15px; padding-top: 22px; }
+    .detail-field { padding: 14px; border-radius: 10px; background: #f8fafc; }
+    .detail-field span { display: block; margin-bottom: 4px; color: var(--muted); font-size: 11px; }
+    .detail-field strong { font-size: 13px; }
+</style>
+{% endblock %}

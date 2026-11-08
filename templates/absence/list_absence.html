@@ -1,0 +1,45 @@
+{% extends "main.html" %}
+{% block title %}Suivi des absences{% endblock %}
+{% block breadcrumb %}Suivi / Absences{% endblock %}
+{% block content %}
+<section class="page-heading">
+    <div>
+        <p class="eyebrow">Pr&eacute;sence et assiduit&eacute;</p>
+        <h1>Suivi des absences</h1>
+        <p class="page-description">Consultez les absences et leur statut de justification.</p>
+    </div>
+</section>
+<section class="panel">
+    <div class="panel-heading">
+        <div>
+            <h2 class="panel-title">Registre des absences</h2>
+            <p class="panel-subtitle">Historique des absences signal&eacute;es</p>
+        </div>
+        <span class="badge badge-neutral">{{ liste_absences|length }} entree{{ liste_absences|length|pluralize }}</span>
+    </div>
+    <div class="table-wrap">
+        <table>
+            <thead><tr><th>&Eacute;tudiant</th><th>Date</th><th>Cours / Horaire</th><th>Statut</th></tr></thead>
+            <tbody>
+                {% for absence in liste_absences %}
+                <tr>
+                    <td>
+                        <div class="person">
+                            <span class="person-avatar">{{ absence.eleve.prenom|first|upper }}{{ absence.eleve.nom|first|upper }}</span>
+                            <span><span class="person-name">{{ absence.eleve.prenom }} {{ absence.eleve.nom }}</span><br><span class="muted">{{ absence.eleve.classe }}</span></span>
+                        </div>
+                    </td>
+                    <td>{{ absence.date|date:"d/m/Y" }}</td>
+                    <td>{{ absence.cours.matiere }}<br><span class="muted">{{ absence.heure_debut }} - {{ absence.heure_fin }}</span></td>
+                    <td>{% if absence.est_justifiee %}<span class="badge">Justifi&eacute;e</span>{% elif absence.est_retard %}<span class="badge badge-neutral">Retard ({{ absence.duree_retard }} min)</span>{% else %}<span class="badge badge-neutral">Non justifi&eacute;e</span>{% endif %}</td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="4">
+                    <div class="empty-state"><span class="empty-icon">AB</span><h3>Aucune absence enregistr&eacute;e</h3><p>Le registre est vide pour le moment.</p></div>
+                </td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+{% endblock %}
